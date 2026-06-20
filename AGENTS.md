@@ -1,6 +1,6 @@
 # Project Agent Rules
 
-Source of intent: `docs/tdd/tdd.md`. Source files remain the final implementation truth.
+Source of intent: `wiki/tdd/tdd.md`. Source files remain the final implementation truth.
 
 Agents working in this repository must keep implementation and documentation changes aligned with the project goal:
 
@@ -30,13 +30,14 @@ Update this map whenever the project structure changes.
 - `service/`: backend service, API, worker, job, integration, or process layer.
 - `shared/`: shared contracts, utilities, constants, types, schemas, or design assets.
 - `tests/`: cross-cutting manual and automated tests.
-- `docs/`: project intent, contracts, architecture, operations, and quality documentation.
+- `wiki/`: project intent, contracts, architecture, operations, and quality documentation.
 - `.agents/`: reusable AI roles, skills, workflows, and tool policies.
 - `.ai/`: context routing, maps, prompt recipes, and generated-index guidance.
+- Tool adapters: `.claude/`, `.codex/`, `.cursor/`, `.github/`, and `.opencode/` expose canonical roles and skills in each tool's expected format.
 
 ## Core Operating Rules
 
-- Prefer project docs as the source of product intent.
+- Prefer project wiki pages as the source of product intent.
 - Prefer exact source files as the source of implementation truth.
 - Use maps, indexes, graphs, and summaries only for discovery.
 - Read exact files before changing them.
@@ -46,9 +47,9 @@ Update this map whenever the project structure changes.
 
 ## Documentation Rules
 
-- Keep `docs/tdd/tdd.md` canonical for technical intent.
-- Update API, data, diagram, testing, deployment, and project-structure docs when behavior or architecture changes.
-- If work is tracked in `docs/development-plan/development-plan.md`, update the matching status.
+- Keep `wiki/tdd/tdd.md` canonical for technical intent.
+- Update API, data, diagram, testing, deployment, and project-structure wiki pages when behavior or architecture changes.
+- If work is tracked in `wiki/development-plan/development-plan.md`, update the matching status.
 - Do not add project-specific requirements to reusable template files unless the project has adopted them.
 
 ## Security Rules
@@ -67,7 +68,7 @@ Update this map whenever the project structure changes.
 
 ## AI Role Usage Guide
 
-Portable role prompts live in `.agents/roles/`.
+Portable role prompts live in `.agents/roles/`. Tool-specific generated adapters live under `.claude/agents/`, `.codex/agents/`, `.cursor/rules/`, `.github/agents/`, and `.opencode/agents/`.
 
 - System Architect: architecture, module boundaries, dataflow, and technical risk.
 - Product & Planning Manager: requirements, acceptance criteria, task breakdown, dependencies, and progress coordination.
@@ -80,7 +81,7 @@ Portable role prompts live in `.agents/roles/`.
 
 ## Skill Usage Guide
 
-Reusable skills live in `.agents/skills/`. Choose the smallest skill that matches the task, then read exact source files before editing.
+Reusable skills live in `.agents/skills/`. Tool-specific skill copies are generated for Claude, Cursor, GitHub Copilot, and OpenCode; Codex and Antigravity use `.agents/skills/` directly. Choose the smallest skill that matches the task, then read exact source files before editing.
 
 ## Verification Commands
 

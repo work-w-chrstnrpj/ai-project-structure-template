@@ -5,7 +5,7 @@ Use these prompts as starting points and adapt them to the current task.
 ## Implement A Feature
 
 ```text
-Use AGENTS.md and the implement-feature skill. Confirm the relevant product and technical docs, identify exact files, implement the smallest safe change, add or update tests, run relevant verification, and summarize the result.
+Use AGENTS.md and the implement-feature skill. Confirm the relevant product and technical wiki pages, identify exact files, implement the smallest safe change, add or update tests, run relevant verification, and summarize the result.
 ```
 
 ## Fix A Bug

@@ -1,5 +1,5 @@
 # Cursor Rule Files
 
-Create rule files here after the project defines its architecture, testing, code style, and AI workflow conventions.
+This folder contains generated Cursor `.mdc` rule adapters for canonical roles.
 
-Avoid hard-coding technology assumptions until the project has adopted a stack.
+Canonical role instructions live in `.agents/roles/`. Run `scripts/generate-ai-adapters.ps1` after changing a role.

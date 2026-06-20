@@ -30,3 +30,13 @@ Use this file to route work to the smallest useful role and skill.
 | Update docs | `update-docs` |
 | Review security | `security-review` |
 | Prepare for release | `release-check` |
+
+## Tool Adapter Routing
+
+Treat `.agents/roles/` and `.agents/skills/` as canonical. After changing either source, run `scripts/generate-ai-adapters.ps1` to refresh:
+
+- Claude adapters in `.claude/`
+- Codex agents in `.codex/agents/`
+- Cursor rules and skills in `.cursor/`
+- GitHub Copilot agents and skills in `.github/`
+- OpenCode agents and skills in `.opencode/`

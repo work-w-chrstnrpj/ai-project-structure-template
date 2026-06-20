@@ -2,7 +2,7 @@
 
 Use layers deliberately:
 
-- Docs = intent layer.
+- Wiki = intent layer.
 - `.ai/context-routing.md` = task routing layer.
 - `.ai/maps/` = compact orientation layer.
 - `.ai/index/*.json` = lightweight generated discovery layer.
@@ -17,7 +17,7 @@ Rule: Never edit based only on a graph, summary, embedding result, repo map, or 
 
 Recommended flow:
 
-1. Start with `AGENTS.md` and the relevant docs.
+1. Start with `AGENTS.md` and the relevant wiki pages.
 2. Use `.ai/context-routing.md` to choose a route.
 3. Read only the matching compact map in `.ai/maps/`.
 4. Inspect `.ai/index/*.json` or search with `rg` for exact symbols, routes, and constants.

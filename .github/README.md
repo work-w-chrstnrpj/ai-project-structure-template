@@ -1,5 +1,9 @@
-# Repository Automation Placeholder
+# GitHub And Copilot Adapters
 
-Use this folder for repository automation, issue templates, pull-request templates, and workflow files.
+Use this folder for repository automation, issue templates, pull-request templates, workflow files, and GitHub Copilot adapters.
 
-Do not add tool-specific workflow files until the project has chosen its verification and release process.
+- Copilot agents: `.github/agents/*.agent.md`
+- Copilot skills: `.github/skills/<skill>/SKILL.md`
+- GitHub Actions: `.github/workflows/`
+
+Copilot adapters are generated from `.agents/roles/` and `.agents/skills/` by `scripts/generate-ai-adapters.ps1`.

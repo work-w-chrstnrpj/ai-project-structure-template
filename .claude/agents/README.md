@@ -1,5 +1,5 @@
 # Claude Agent Adapters
 
-This folder is intended for tool-specific agent adapter files.
+This folder contains generated Claude Code subagent files.
 
-Create adapter files only when the tool requires a separate format. Keep the canonical agent instructions in `.agents/roles/`.
+Canonical role instructions live in `.agents/roles/`. Run `scripts/generate-ai-adapters.ps1` after changing a role.

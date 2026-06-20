@@ -1,5 +1,8 @@
-# Claude Adapter Placeholder
+# Claude Adapters
 
-Use this folder only if the project needs Claude-compatible agent adapters.
+Claude-compatible adapters are generated from canonical files in `.agents/`.
 
-Keep adapters thin. They should point to the canonical role definitions in `.agents/roles/` and avoid duplicating project-specific rules.
+- Agents: `.claude/agents/*.md`
+- Skills: `.claude/skills/<skill>/SKILL.md`
+
+Edit `.agents/roles/` or `.agents/skills/`, then run `scripts/generate-ai-adapters.ps1`. Do not make Claude-only edits unless the tool format itself requires them.

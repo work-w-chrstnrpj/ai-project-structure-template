@@ -1,5 +1,8 @@
-# Cursor Rules Placeholder
+# Cursor Adapters
 
-Use this folder only if the project uses Cursor rules.
+Cursor-compatible adapters are generated from canonical files in `.agents/`.
 
-Rules in this folder should summarize project-specific conventions and point back to `AGENTS.md`, `docs/`, and `.agents/`.
+- Rules: `.cursor/rules/*.mdc`
+- Skills: `.cursor/skills/<skill>/SKILL.md`
+
+Edit `.agents/roles/` or `.agents/skills/`, then run `scripts/generate-ai-adapters.ps1`. Rules should point back to `AGENTS.md`, `wiki/`, and `.agents/`.

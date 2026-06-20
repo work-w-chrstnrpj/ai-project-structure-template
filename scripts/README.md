@@ -4,6 +4,12 @@ This folder is intended for project automation scripts.
 
 Use scripts for repeatable development, verification, setup, maintenance, data processing, release, or operational tasks.
 
+## Available Scripts
+
+| Script | Purpose |
+| --- | --- |
+| `generate-ai-adapters.ps1` | Generates Claude, Codex, Cursor, GitHub Copilot, and OpenCode adapters from canonical `.agents/roles/` and `.agents/skills/`. |
+
 ## Suggested Sections To Fill
 
 - Script purpose.
