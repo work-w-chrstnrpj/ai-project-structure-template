@@ -23,6 +23,8 @@ Use this file to route work to the smallest useful role and skill.
 | Implement a change | `execute-code-change` |
 | Implement a feature | `implement-feature` |
 | Fix a bug | `fix-bug` |
+| Investigate why an issue occurred | `investigate-issue` |
+| Generate an RCA report | `generate-rca` |
 | Review a patch | `code-review` |
 | Add automated tests | `write-automated-test-cases` |
 | Create manual test cases | `create-manual-test-cases` |

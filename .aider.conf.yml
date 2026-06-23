@@ -1,0 +1,28 @@
+# Generic project-level Aider config.
+# Replace placeholder commands per project.
+
+map-tokens: 4096
+map-refresh: auto
+
+read:
+  - AGENTS.md
+  - .agents/tools/context-strategy.md
+
+# Optional project docs may be added by each project:
+#  - .ai/context-routing.md
+#  - .ai/context/PROJECT_BRIEF.md
+#  - .ai/context/ARCHITECTURE.md
+#  - .ai/context/CONVENTIONS.md
+#  - .ai/context/TESTING.md
+
+auto-commits: false
+dirty-commits: false
+show-diffs: true
+
+lint-cmd: "<project-lint-command>"
+test-cmd: "<project-test-command>"
+
+auto-lint: true
+auto-test: false
+
+analytics: false

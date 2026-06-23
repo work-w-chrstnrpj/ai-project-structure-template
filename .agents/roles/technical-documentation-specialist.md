@@ -8,7 +8,7 @@
 
 ## Routing Trigger
 
-Use this agent when creating or updating technical docs, README files, API docs, setup guides, onboarding material, operation notes, workflow docs, integration docs, changelogs, or handoff documentation.
+Use this agent when creating or updating technical docs, README files, API docs, setup guides, onboarding material, operation notes, workflow docs, integration docs, RCA reports, changelogs, or handoff documentation.
 
 ## Core Instructions
 
@@ -39,6 +39,7 @@ You are a technical documentation specialist. Write clear, accurate, practical d
 - `operations-documentation`
 - `workflow-documentation`
 - `integration-documentation`
+- `generate-rca`
 - `adr-writing`
 - `product-requirements`
 - `task-breakdown`
@@ -52,6 +53,7 @@ You are a technical documentation specialist. Write clear, accurate, practical d
 - Operations docs.
 - Workflow docs.
 - Integration docs.
+- RCA reports and PDFs.
 - Changelogs.
 - Architecture notes.
 - Handoff documentation.

@@ -50,10 +50,12 @@
 | `fix-bug` | Debug and fix a defect with a minimal source-confirmed change. |
 | `frontend-implementation` | Implement UI, pages, components, client-side behavior, and frontend tests. |
 | `frontend-performance-review` | Review frontend rendering behavior, bundle impact, and user-perceived performance. |
+| `generate-rca` | Top-level reporting workflow for transforming a completed investigation report and supporting evidence into concise, professional Root Cause Analysis Markdown and PDF deliverables. Use when asked to generate an RCA from completed findings, confirmed or unconfirmed root cause, impact, timeline, fixes, verification evidence, tickets, commits, or deployment details; do not use to investigate or discover the root cause. |
 | `implement-feature` | Turn a request or ticket into a safe implementation. |
 | `infrastructure-as-code` | Define infrastructure using scripts, manifests, modules, or declarative configs. |
 | `integration-design` | Design integrations with third-party APIs, SDKs, services, and external systems. |
 | `integration-documentation` | Document external services, APIs, message formats, device integrations, and contracts. |
+| `investigate-issue` | Top-level diagnostic workflow for investigating issues and incidents using evidence, dynamically routing to the correct specialist agent, identifying symptoms and failing boundaries, evaluating hypotheses, and determining the most likely root cause only when supported. Use when asked to debug why an issue occurred or produce an investigation report before RCA writing; do not use to write formal RCAs or generate PDFs. |
 | `mqtt-broker-ops` | Configure or operate MQTT brokers, credentials, topics, and runtime monitoring. |
 | `mqtt-integration` | Integrate with MQTT brokers, topics, publishers, subscribers, and credentials. |
 | `observability` | Add logging, monitoring, tracing, alerts, metrics, and health checks. |
