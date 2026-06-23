@@ -31,9 +31,9 @@ Update this map whenever the project structure changes.
 - `shared/`: shared contracts, utilities, constants, types, schemas, or design assets.
 - `tests/`: cross-cutting manual and automated tests.
 - `wiki/`: project intent, contracts, architecture, operations, and quality documentation.
-- `.agents/`: reusable AI roles, skills, workflows, and tool policies.
+- `.agents/`: canonical reusable AI roles, skills, overlays, workflows, and tool policies.
 - `.ai/`: context routing, maps, prompt recipes, and generated-index guidance.
-- Tool adapters: `.claude/`, `.codex/`, `.cursor/`, `.github/`, and `.opencode/` expose canonical roles and skills in each tool's expected format.
+- Tool adapters: `.claude/`, `.codex/`, `.cursor/`, `.github/`, `.opencode/`, and other generated folders expose canonical assets in each tool's expected format.
 
 ## Core Operating Rules
 
@@ -66,6 +66,29 @@ Update this map whenever the project structure changes.
 - Keep commits scoped and explain verification in PR notes.
 - Avoid force push, reset, clean, or destructive history operations without explicit approval.
 
+## Canonical AI Structure
+
+Canonical reusable AI assets live in `.agents/`:
+
+- `.agents/roles/`: 8 role owners.
+- `.agents/skills/`: reusable workflow skills only.
+- `.agents/overlays/`: Mentor and Coach overlays.
+- `.agents/workflows/`: multi-role workflows.
+- `.agents/tools/`: context, verification, adapter, and tool policies.
+
+Tool-specific folders are generated adapters, not source of truth. Update canonical files first, then run `scripts/sync-ai-adapters.ps1`.
+
+## Overlay Usage
+
+Use overlays to change response style without changing work ownership.
+
+Examples:
+
+- `Mentor ELI12: Explain this architecture.`
+- `Coach: Critique this plan.`
+- `Backend & Database Engineer + Mentor: Explain this API design.`
+- `System Architect + Coach: Challenge this architecture proposal.`
+
 ## AI Role Usage Guide
 
 Portable role prompts live in `.agents/roles/`. Tool-specific generated adapters live under `.claude/agents/`, `.codex/agents/`, `.cursor/rules/`, `.github/agents/`, and `.opencode/agents/`.
@@ -81,7 +104,11 @@ Portable role prompts live in `.agents/roles/`. Tool-specific generated adapters
 
 ## Skill Usage Guide
 
-Reusable skills live in `.agents/skills/`. Tool-specific skill copies are generated for Claude, Cursor, GitHub Copilot, and OpenCode; Codex and Antigravity use `.agents/skills/` directly. Choose the smallest skill that matches the task, then read exact source files before editing.
+Create or keep a standalone skill only when it defines a reusable workflow with clear inputs, steps, boundaries, and outputs.
+
+Do not create standalone skills for every role capability. Put domain-specific capability guidance inside the owning role file under `Embedded Capability Playbooks`.
+
+Reusable skills live in `.agents/skills/`. Tool-specific skill copies are generated for Claude, Cursor, GitHub Copilot, OpenCode, and Windsurf; Codex and Antigravity use `.agents/skills/` directly. Choose the smallest skill that matches the task, then read exact source files before editing.
 
 ## Verification Commands
 

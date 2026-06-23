@@ -8,7 +8,8 @@ Use scripts for repeatable development, verification, setup, maintenance, data p
 
 | Script | Purpose |
 | --- | --- |
-| `generate-ai-adapters.ps1` | Generates Claude, Codex, Cursor, GitHub Copilot, and OpenCode adapters from canonical `.agents/roles/` and `.agents/skills/`. |
+| `sync-ai-adapters.ps1` | Preferred target-aware sync for Claude, Codex, Cursor, Copilot, OpenCode, Aider, Cline, Kilo, Windsurf, Antigravity, and OpenHands adapters from canonical `.agents/` sources. |
+| `generate-ai-adapters.ps1` | Compatibility wrapper that runs `sync-ai-adapters.ps1 -Target all`. |
 
 ## Suggested Sections To Fill
 

@@ -62,6 +62,15 @@ When evidence is unclear, use these defaults:
 10. Recommend fixes and the next evidence to collect.
 11. Decide whether a formal RCA is needed.
 
+## Boundaries
+
+- `investigate-issue` = find evidence, isolate failing boundary, rank hypotheses.
+- `execute-code-change` = modify files.
+- `generate-rca` = write final formal RCA after evidence exists.
+- Do not auto-fix.
+- Do not write formal RCA.
+- Do not generate PDFs.
+
 ## Rules
 
 - Separate symptoms, facts, observations, hypotheses, evidence, and conclusions.

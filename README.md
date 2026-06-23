@@ -11,8 +11,8 @@ It is intentionally technology-agnostic. Replace bracketed placeholders such as 
 3. Update `wiki/project-structure/project-structure.md` so the folder map matches the project you are building.
 4. Fill only the wiki pages that apply. Delete or archive sections that are not relevant to the project.
 5. Adapt `application/`, `service/`, `shared/`, and `tests/` to the actual architecture and programming language.
-6. Update `AGENTS.md`, `.agents/roles/`, `.agents/skills/`, and `.agents/workflows/` with project-specific paths only after the project structure is known.
-7. Run `scripts/generate-ai-adapters.ps1` after role or skill changes so Claude, Codex, Cursor, GitHub Copilot, and OpenCode can discover tool-specific adapters.
+6. Update `AGENTS.md`, `.agents/roles/`, `.agents/skills/`, `.agents/overlays/`, and `.agents/workflows/` with project-specific paths only after the project structure is known.
+7. Run `scripts/sync-ai-adapters.ps1` after role, skill, overlay, or workflow changes so tool-specific adapters stay in sync.
 
 ## Fill First
 
@@ -36,14 +36,28 @@ It is intentionally technology-agnostic. Replace bracketed placeholders such as 
 
 ## AI Tool Adapters
 
-Canonical role prompts live in `.agents/roles/`; canonical skills live in `.agents/skills/`. Tool-specific folders are generated adapters, not the source of truth:
+Canonical assets live in `.agents/` (roles, skills, overlays, workflows, tools). Tool-specific folders are generated adapters, not the source of truth. Skills are intentionally curated reusable workflows only.
 
-- Claude: `.claude/agents/*.md` and `.claude/skills/<skill>/SKILL.md`
+Preferred sync command:
+
+```powershell
+pwsh scripts/sync-ai-adapters.ps1 -Target all
+pwsh scripts/sync-ai-adapters.ps1 -Target opencode
+pwsh scripts/sync-ai-adapters.ps1 -Target claude
+```
+
+`scripts/generate-ai-adapters.ps1` remains a compatibility wrapper that syncs all targets.
+
+- Claude: `CLAUDE.md`, `.claude/agents/*.md`, `.claude/skills/<skill>/SKILL.md`
 - Codex: `.codex/agents/*.toml`; skills are read from `.agents/skills/`
 - Cursor: `.cursor/rules/*.mdc` and `.cursor/skills/<skill>/SKILL.md`
-- GitHub Copilot: `.github/agents/*.agent.md` and `.github/skills/<skill>/SKILL.md`
-- OpenCode: `.opencode/agents/*.md` and `.opencode/skills/<skill>/SKILL.md`
-- Google Antigravity: UI-managed agents; workspace skills use `.agents/skills/<skill>/SKILL.md`
+- GitHub Copilot: `.github/copilot-instructions.md`, `.github/agents/*.agent.md`, `.github/skills/<skill>/SKILL.md`
+- OpenCode: `opencode.json`, `.opencode/agents/*.md`, `.opencode/skills/<skill>/SKILL.md`
+- Aider: `.aider.conf.yml`, `CONVENTIONS.md`
+- Cline: `.clinerules/*.md`
+- Kilo Code: `kilo.jsonc`, `.kilo/rules/*.md`
+- Windsurf: `.windsurf/rules/*.md`, `.windsurf/workflows/*.md`, `.windsurf/skills/<skill>/SKILL.md`
+- Google Antigravity: uses `AGENTS.md` and `.agents/skills/` directly
 
 ## What This Template Does Not Include
 

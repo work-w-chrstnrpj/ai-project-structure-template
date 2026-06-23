@@ -6,14 +6,8 @@ map-refresh: auto
 
 read:
   - AGENTS.md
-  - .agents/tools/context-strategy.md
-
-# Optional project docs may be added by each project:
-#  - .ai/context-routing.md
-#  - .ai/context/PROJECT_BRIEF.md
-#  - .ai/context/ARCHITECTURE.md
-#  - .ai/context/CONVENTIONS.md
-#  - .ai/context/TESTING.md
+  - CONVENTIONS.md
+  - .agents/tools/context-policy.md
 
 auto-commits: false
 dirty-commits: false
