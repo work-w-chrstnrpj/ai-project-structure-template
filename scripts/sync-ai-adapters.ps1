@@ -11,7 +11,8 @@ param(
         "kilo",
         "windsurf",
         "antigravity",
-        "openhands"
+        "openhands",
+        "gemini"
     )]
     [string[]]$Target = @("all"),
 
@@ -337,6 +338,20 @@ function Sync-Claude {
     Sync-SkillAdapters -TargetRoots @((Join-RepoPath $Root ".claude" "skills"))
 }
 
+function Sync-Gemini {
+    $geminiMd = @(
+        "# Google Gemini Project Instructions"
+        ""
+        "Generated adapter summary. Canonical sources live in ``AGENTS.md`` and ``.agents/``."
+        ""
+        "Read ``AGENTS.md`` first. Use roles from ``.agents/roles/``. Use standalone skills from ``.agents/skills/``. Overlays: Mentor and Coach in ``.agents/overlays/``."
+        ""
+        "Regenerate adapters: ``pwsh scripts/sync-ai-adapters.ps1 -Target gemini``"
+        ""
+    ) -join "`n"
+    Write-Utf8NoBom -Path (Join-RepoPath $Root "GEMINI.md") -Content $geminiMd
+}
+
 function Sync-Codex {
     foreach ($role in $roles) {
         Write-CodexAgent -Role $role
@@ -567,7 +582,7 @@ $skills = Get-ChildItem -Path $skillRoot -Directory | Where-Object {
 } | Sort-Object Name | ForEach-Object { Get-SkillMetadata -Directory $_ }
 $overlays = Get-ChildItem -Path $overlayRoot -Filter "*.md" | Where-Object { $_.Name -ne "README.md" } | Sort-Object Name | ForEach-Object { Get-OverlayMetadata -File $_ }
 
-$allTargets = @("claude", "codex", "cursor", "copilot", "opencode", "aider", "cline", "kilo", "windsurf", "antigravity", "openhands")
+$allTargets = @("claude", "codex", "cursor", "copilot", "opencode", "aider", "cline", "kilo", "windsurf", "antigravity", "openhands", "gemini")
 $selected = if ($Target -contains "all") { $allTargets } else { $Target }
 
 $generated = @()
@@ -585,6 +600,7 @@ foreach ($t in $selected) {
         "windsurf" { Sync-Windsurf; $generated += "windsurf" }
         "antigravity" { Sync-Antigravity; $generated += "antigravity" }
         "openhands" { Sync-OpenHands; $generated += "openhands" }
+        "gemini" { Sync-Gemini; $generated += "gemini" }
         default { throw "Unsupported target: $t" }
     }
 }
