@@ -10,9 +10,7 @@ tools:
   - Bash
 ---
 
-# Tool Adapter: Technical Documentation Specialist
-
-Generated from `.agents/roles/technical-documentation-specialist.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/technical-documentation-specialist.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: Technical Documentation Specialist
 

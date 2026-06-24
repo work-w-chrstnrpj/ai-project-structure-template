@@ -1,0 +1,648 @@
+# mplementation Instruction: Fix Formatting, Parser Compatibility, and Adapter Validity
+
+## Current Review Verdict
+
+The repository architecture is now conceptually good, but the implementation is still not fully tool-ready.
+
+```txt
+Design: good enough
+Implementation/tool-readiness: not good enough yet
+Main blocker: Markdown/YAML/PowerShell files are still compressed or malformed
+```
+
+The project now appears to have the correct high-level structure:
+
+```txt
+8 core role agents
+curated reusable workflow skills
+Mentor and Coach overlays
+target-aware adapter sync script
+generated tool adapters
+```
+
+However, many files are still compressed into giant lines or malformed Markdown/YAML. This likely breaks parsing for the adapter generator, validators, and target tools like OpenCode, Claude Code, Cursor, Codex, GitHub Copilot, Cline, Kilo Code, and Windsurf.
+
+The next task is not an architecture redesign. The next task is a strict formatting, parser-compatibility, and adapter-validity fix.
+
+---
+
+# Primary Objective
+
+Fix formatting only.
+
+Normalize Markdown, YAML frontmatter, generated adapter files, and PowerShell scripts so the repo is readable, parseable, and valid for adapter generation.
+
+The final result must pass:
+
+```powershell
+pwsh scripts/validate-ai-template.ps1
+```
+
+Then regenerate adapters:
+
+```powershell
+pwsh scripts/sync-ai-adapters.ps1 -Target all
+```
+
+Then validate again:
+
+```powershell
+pwsh scripts/validate-ai-template.ps1
+```
+
+Do not stop until validation passes.
+
+---
+
+# Non-Negotiable Constraints
+
+Do not redesign the architecture.
+
+Do not add new agents.
+
+Do not add new standalone skills.
+
+Do not reintroduce removed granular capability skills.
+
+Do not rename the 8 core role agents.
+
+Do not remove Mentor or Coach overlays.
+
+Do not change the semantic intent of the files unless required to make formatting valid.
+
+Do not manually improve generated adapters in a way that is not reflected in canonical `.agents/` files.
+
+Canonical files must be edited first.
+
+Generated adapter files must be regenerated from canonical files.
+
+---
+
+# Current Architecture to Preserve
+
+Preserve this canonical source structure:
+
+```txt
+AGENTS.md
+
+.agents/
+  README.md
+
+  roles/
+    system-architect.md
+    product-planning-manager.md
+    frontend-ui-ux-developer.md
+    backend-database-engineer.md
+    devops-engineer.md
+    security-engineer.md
+    sqa-engineer.md
+    technical-documentation-specialist.md
+
+  overlays/
+    mentor.md
+    coach.md
+    README.md
+
+  skills/
+    ask-repo-question/
+      SKILL.md
+    investigate-issue/
+      SKILL.md
+    plan-code-change/
+      SKILL.md
+    execute-code-change/
+      SKILL.md
+    code-review/
+      SKILL.md
+    use-context-tools/
+      SKILL.md
+    write-automated-test-cases/
+      SKILL.md
+    create-manual-test-cases/
+      SKILL.md
+    execute-manual-test-cases/
+      SKILL.md
+    update-docs/
+      SKILL.md
+    release-check/
+      SKILL.md
+    generate-rca/
+      SKILL.md
+    sync-ai-adapters/
+      SKILL.md
+
+  workflows/
+    *.md
+
+  tools/
+    *.md
+
+scripts/
+  sync-ai-adapters.ps1
+  validate-ai-template.ps1
+  README.md
+```
+
+Preserve this generated adapter concept:
+
+```txt
+.claude/
+.codex/
+.cursor/
+.github/
+.opencode/
+.clinerules/
+.kilo/
+.windsurf/
+```
+
+Generated adapters must be treated as generated output, not canonical source.
+
+---
+
+# Known Problems to Fix
+
+## 1. `AGENTS.md` Is Still Compressed
+
+`AGENTS.md` appears to have too few raw lines, with headings, prose, lists, and code blocks compressed together.
+
+Fix it into readable Markdown with real line breaks.
+
+Expected properties:
+
+```txt
+- More than 40 lines.
+- Proper Markdown headings.
+- Proper paragraphs.
+- Proper bullet lists.
+- Proper fenced code blocks.
+- No major section collapsed onto one line.
+```
+
+---
+
+## 2. Canonical Role Metadata Is Not Parseable
+
+Role files must expose metadata at the start of separate lines.
+
+Bad pattern:
+
+```md
+# Agent: Backend & Database Engineer ## Identity - **Name:** backend-database-engineer - **Role:** ...
+```
+
+Good pattern:
+
+```md
+# Agent: Backend & Database Engineer
+
+## Identity
+
+- **Name:** backend-database-engineer
+- **Role:** Backend & Database Engineer
+- **Description:** Owns backend services, APIs, business logic, data models, integrations, batch work, queues, and data ingestion.
+```
+
+Apply this to every file in:
+
+```txt
+.agents/roles/*.md
+```
+
+The sync script expects metadata using line-start matching. Therefore, these lines must start exactly like this:
+
+```md
+- **Name:**
+- **Role:**
+- **Description:**
+```
+
+Do not bury these fields in the middle of another line.
+
+---
+
+## 3. Skill Frontmatter Is Invalid
+
+Every skill file must use valid multiline YAML frontmatter.
+
+Bad pattern:
+
+```md
+--- name: plan-code-change description: Plan a code change without editing files. ---
+```
+
+Good pattern:
+
+```md
+---
+name: plan-code-change
+description: Plan a code change without editing files.
+---
+
+# Plan Code Change
+```
+
+Apply this to every file matching:
+
+```txt
+.agents/skills/*/SKILL.md
+```
+
+Required properties:
+
+```txt
+- Opening `---` must be on its own line.
+- `name:` must be on its own line.
+- `description:` must be on its own line.
+- Closing `---` must be on its own line.
+- The first Markdown heading must come after the closing frontmatter.
+```
+
+---
+
+## 4. Overlay Files Must Be Readable Markdown
+
+Normalize these files:
+
+```txt
+.agents/overlays/README.md
+.agents/overlays/mentor.md
+.agents/overlays/coach.md
+```
+
+They must have readable headings, paragraphs, bullets, and examples.
+
+Preserve the conceptual model:
+
+```txt
+Mentor = explanation and teaching overlay.
+Coach = critique and decision-quality overlay.
+Overlays change response style/posture.
+Overlays do not own implementation, architecture, QA, security, deployment, or documentation decisions.
+```
+
+---
+
+## 5. Generated Adapter Frontmatter Is Malformed
+
+Generated adapter files currently appear to have one-line YAML frontmatter.
+
+Bad OpenCode adapter pattern:
+
+```md
+--- name: coach description: Overlay: coach mode: primary permission: edit: deny bash: ask ---
+```
+
+Good OpenCode adapter pattern:
+
+```md
+---
+name: coach
+description: "Overlay: coach. Changes response style, not work ownership."
+mode: primary
+permission:
+  edit: deny
+  bash: ask
+---
+```
+
+Fix the generator so generated adapter files use valid multiline frontmatter.
+
+Do not manually edit generated adapters as the source of truth.
+
+Fix canonical files and/or `scripts/sync-ai-adapters.ps1`, then regenerate adapters.
+
+---
+
+## 6. PowerShell Scripts Need Normal Formatting
+
+Normalize:
+
+```txt
+scripts/sync-ai-adapters.ps1
+scripts/validate-ai-template.ps1
+```
+
+Expected properties:
+
+```txt
+- Readable multiline PowerShell.
+- Functions start on their own lines.
+- Parameters are readable.
+- Regex strings are clear.
+- No major function compressed into a single line.
+- Existing behavior is preserved unless a fix is needed for parser compatibility.
+```
+
+Do not rewrite the whole script unnecessarily.
+
+Fix only what is needed to make formatting and adapter generation reliable.
+
+---
+
+# Required Implementation Steps
+
+## Step 1: Inspect Current State
+
+Inspect these files first:
+
+```txt
+AGENTS.md
+.agents/README.md
+.agents/roles/*.md
+.agents/skills/*/SKILL.md
+.agents/overlays/*.md
+.agents/workflows/*.md
+.agents/tools/*.md
+scripts/sync-ai-adapters.ps1
+scripts/validate-ai-template.ps1
+scripts/README.md
+```
+
+Also inspect generated adapters:
+
+```txt
+.claude/
+.codex/
+.cursor/
+.github/
+.opencode/
+.clinerules/
+.kilo/
+.windsurf/
+```
+
+Identify all files with compressed Markdown, invalid frontmatter, or malformed generated output.
+
+---
+
+## Step 2: Normalize Canonical Files First
+
+Fix formatting in canonical files before touching generated adapters.
+
+Canonical files include:
+
+```txt
+AGENTS.md
+.agents/README.md
+.agents/roles/*.md
+.agents/skills/*/SKILL.md
+.agents/overlays/*.md
+.agents/workflows/*.md
+.agents/tools/*.md
+```
+
+Do not change the architecture.
+
+Only normalize formatting, frontmatter, headings, lists, fenced code blocks, and parseable metadata.
+
+---
+
+## Step 3: Fix Role Metadata
+
+For every role file, enforce this shape:
+
+```md
+# Agent: <Human Readable Role Name>
+
+## Identity
+
+- **Name:** <machine-name>
+- **Role:** <human-readable-role>
+- **Description:** <one-sentence role description>
+```
+
+Then preserve or normalize these sections if present:
+
+```md
+## Reusable Skills
+
+## Embedded Capability Playbooks
+
+## Boundaries
+
+## Handoff Rules
+
+## Output Expectations
+```
+
+Do not return to the old giant `Allowed Skills` model.
+
+Do not re-add removed granular skill lists.
+
+---
+
+## Step 4: Fix Skill Frontmatter
+
+For every skill:
+
+```txt
+.agents/skills/*/SKILL.md
+```
+
+Use this exact frontmatter pattern:
+
+```md
+---
+name: <skill-folder-name>
+description: <short skill description>
+---
+```
+
+The skill folder name and `name:` value should match.
+
+Example:
+
+```txt
+.agents/skills/plan-code-change/SKILL.md
+```
+
+Should start with:
+
+```md
+---
+name: plan-code-change
+description: Plan a code change without editing files.
+---
+```
+
+After frontmatter, use readable Markdown.
+
+Preserve the workflow expectations already added:
+
+```txt
+plan-code-change:
+- feature mode
+- bugfix mode
+- refactor mode
+- chore mode
+
+execute-code-change:
+- plan-first execution
+- direct execution
+```
+
+---
+
+## Step 5: Fix Adapter Generator Output
+
+Update `scripts/sync-ai-adapters.ps1` so all generated files use valid multiline frontmatter.
+
+Minimum generated adapter requirements:
+
+### OpenCode agent/overlay adapter
+
+```md
+---
+name: coach
+description: "Overlay: coach. Changes response style, not work ownership."
+mode: primary
+permission:
+  edit: deny
+  bash: ask
+---
+
+<!-- Generated from .agents/overlays/coach.md. Do not edit directly. -->
+```
+
+### Claude agent adapter
+
+```md
+---
+name: backend-database-engineer
+description: "Backend & Database Engineer"
+tools: Read, Grep, Glob, Bash
+---
+
+<!-- Generated from .agents/roles/backend-database-engineer.md. Do not edit directly. -->
+```
+
+### Cursor rule adapter
+
+```md
+---
+description: Backend & Database Engineer
+globs:
+alwaysApply: false
+---
+
+<!-- Generated from .agents/roles/backend-database-engineer.md. Do not edit directly. -->
+```
+
+Only use the actual format required by each target tool if already implemented in the repo. The important fix is valid multiline frontmatter.
+
+---
+
+## Step 6: Regenerate Adapters
+
+After canonical files and script formatting are fixed, run:
+
+```powershell
+pwsh scripts/sync-ai-adapters.ps1 -Target all
+```
+
+Do not manually patch generated adapters afterward unless the generator is also updated.
+
+If generated adapters are malformed, fix the generator and rerun.
+
+---
+
+## Step 7: Validate
+
+Run:
+
+```powershell
+pwsh scripts/validate-ai-template.ps1
+```
+
+If validation fails, fix the underlying canonical source or generator.
+
+Then rerun:
+
+```powershell
+pwsh scripts/sync-ai-adapters.ps1 -Target all
+pwsh scripts/validate-ai-template.ps1
+```
+
+Repeat until validation passes.
+
+---
+
+# Acceptance Criteria
+
+The task is complete only when all of the following are true:
+
+```txt
+- AGENTS.md has more than 40 lines.
+- AGENTS.md is readable Markdown with proper headings and lists.
+- .agents/README.md is readable Markdown.
+- Every .agents/roles/*.md file has parseable metadata at line starts.
+- Every role file uses Reusable Skills and Embedded Capability Playbooks.
+- No canonical role returns to giant Allowed Skills lists.
+- Every .agents/skills/*/SKILL.md file has valid multiline YAML frontmatter.
+- The curated standalone skill set remains intact.
+- Removed granular capability skills are not reintroduced.
+- Mentor and Coach overlays remain in .agents/overlays/.
+- Overlay files are readable Markdown.
+- scripts/sync-ai-adapters.ps1 is readable multiline PowerShell.
+- scripts/validate-ai-template.ps1 is readable multiline PowerShell.
+- Generated adapter files have valid multiline frontmatter.
+- No generated adapter starts with one-line frontmatter like `--- name:`.
+- OpenCode mentor and coach adapters have multiline YAML frontmatter.
+- OpenCode mentor and coach adapters deny edit permission.
+- Generated adapter files include source notices pointing back to .agents/.
+- `pwsh scripts/sync-ai-adapters.ps1 -Target all` runs successfully.
+- `pwsh scripts/validate-ai-template.ps1` exits successfully.
+```
+
+---
+
+# Do Not Do These
+
+Do not add a new `teacher` agent.
+
+Do not merge Mentor and Coach back into one file.
+
+Do not add more role agents.
+
+Do not add more standalone skills.
+
+Do not move domain capability playbooks back into `.agents/skills/`.
+
+Do not manually edit generated files without updating the generator.
+
+Do not delete validation logic to make validation pass.
+
+Do not weaken validation rules just to pass.
+
+Do not remove parser checks for role metadata or skill frontmatter.
+
+Do not change the goal of the repo.
+
+---
+
+# Final Expected Outcome
+
+After this task, the repo should be:
+
+```txt
+Readable.
+Parseable.
+Validator-clean.
+Adapter-generation-safe.
+Aligned with canonical-source architecture.
+Still lean and quality-over-quantity.
+```
+
+The repository should clearly follow this model:
+
+```txt
+Humans and AI agents edit canonical files in `.agents/`.
+Scripts generate target-specific adapters.
+Generated adapters are not the source of truth.
+Standalone skills are reusable workflows only.
+Role-specific domain procedures live inside role files.
+Mentor and Coach are overlays, not work-owning agents.
+```
+
+This is a formatting and tool-readiness fix, not a new architecture pass.

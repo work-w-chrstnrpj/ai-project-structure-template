@@ -24,13 +24,30 @@ The validation script checks:
 
 1. Canonical role metadata is parseable (`- **Name:**`, `- **Role:**`, `- **Description:**` at line starts).
 2. Role files have adequate line count (not compressed).
-3. Every `.agents/skills/*/SKILL.md` has valid multiline YAML frontmatter with `name:` and `description:`.
-4. Removed granular skill folders are not present.
-5. Generated adapter files in `.claude/`, `.cursor/`, `.github/`, `.opencode/`, `.windsurf/` use multiline frontmatter (no `--- name:` on one line).
-6. Generated agent/rule files contain source-of-truth notices pointing back to `.agents/`.
-7. OpenCode overlay files (coach, mentor) deny edit permission.
-8. `AGENTS.md` has adequate line count and heading structure.
-9. Script files have adequate line count (not compressed).
+3. Role files use `## Reusable Skills` and `## Embedded Capability Playbooks` (no deprecated `## Allowed Skills`).
+4. Exactly 13 curated standalone skills are present with no extras or missing folders.
+5. Every `.agents/skills/*/SKILL.md` has valid multiline YAML frontmatter with `name:` and `description:`.
+6. Removed granular skill folders are not present.
+7. Overlay files (`mentor.md`, `coach.md`, `README.md`) are readable Markdown.
+8. Generated adapter files in `.claude/`, `.cursor/`, `.github/`, `.opencode/`, `.windsurf/` use multiline frontmatter (no `--- name:` on one line).
+9. Generated agent/rule files contain source-of-truth notices pointing back to `.agents/`.
+10. OpenCode overlay files (coach, mentor) deny edit permission.
+11. `AGENTS.md` has adequate line count and heading structure.
+12. Script files have adequate line count (not compressed).
+
+## Adapter Sync
+
+After canonical changes pass validation, regenerate adapters:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/sync-ai-adapters.ps1 -Target all
+```
+
+Then validate again:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate-ai-template.ps1
+```
 
 ## Suggested Sections To Fill
 

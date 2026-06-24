@@ -10,9 +10,7 @@ tools:
   - Bash
 ---
 
-# Tool Adapter: Coach Overlay
-
-Generated from `.agents/overlays/coach.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/overlays/coach.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Coach Overlay
 

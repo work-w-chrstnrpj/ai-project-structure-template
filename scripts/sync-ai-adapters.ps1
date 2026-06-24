@@ -169,15 +169,12 @@ function Remove-StaleSkillAdapters {
 
 function New-AdapterBody {
     param(
-        [Parameter(Mandatory = $true)][string]$Title,
         [Parameter(Mandatory = $true)][string]$CanonicalPath,
         [Parameter(Mandatory = $true)][string]$Content
     )
 
     return @(
-        "# Tool Adapter: $Title"
-        ""
-        "Generated from ``$CanonicalPath``. Edit the canonical source, then run ``scripts/sync-ai-adapters.ps1``."
+        "<!-- Generated from $CanonicalPath. Do not edit directly. Edit the canonical source, then run ``scripts/sync-ai-adapters.ps1``. -->"
         ""
         $Content
     ) -join "`n"
@@ -190,7 +187,7 @@ function Write-ClaudeAgent {
         [Parameter(Mandatory = $true)][string]$OutputName
     )
 
-    $body = New-AdapterBody -Title $Item.Title -CanonicalPath $CanonicalPath -Content $Item.Content
+    $body = New-AdapterBody -CanonicalPath $CanonicalPath -Content $Item.Content
     $content = @(
         "---"
         "name: $($Item.Name)"
@@ -220,7 +217,7 @@ function Write-OpenCodeAgent {
         [string]$EditPermission = "allow"
     )
 
-    $body = New-AdapterBody -Title $Item.Title -CanonicalPath $CanonicalPath -Content $Item.Content
+    $body = New-AdapterBody -CanonicalPath $CanonicalPath -Content $Item.Content
     $content = @(
         "---"
         "name: $($Item.Name)"
@@ -242,7 +239,7 @@ function Write-CodexAgent {
     param([Parameter(Mandatory = $true)][object]$Role)
 
     $canonicalPath = ".agents/roles/$($Role.FileName)"
-    $instructions = New-AdapterBody -Title $Role.Title -CanonicalPath $canonicalPath -Content $Role.Content
+    $instructions = New-AdapterBody -CanonicalPath $canonicalPath -Content $Role.Content
     if ($instructions.Contains("'''")) {
         throw "Cannot write TOML literal string for $($Role.Name); canonical role contains triple single quotes."
     }
@@ -267,7 +264,7 @@ function Write-CursorRule {
         [Parameter(Mandatory = $true)][string]$OutputName
     )
 
-    $body = New-AdapterBody -Title $Item.Title -CanonicalPath $CanonicalPath -Content $Item.Content
+    $body = New-AdapterBody -CanonicalPath $CanonicalPath -Content $Item.Content
     $content = @(
         "---"
         "description: $(Quote-Yaml $Item.Description)"
@@ -286,7 +283,7 @@ function Write-GitHubCopilotAgent {
     param([Parameter(Mandatory = $true)][object]$Role)
 
     $canonicalPath = ".agents/roles/$($Role.FileName)"
-    $body = New-AdapterBody -Title $Role.Title -CanonicalPath $canonicalPath -Content $Role.Content
+    $body = New-AdapterBody -CanonicalPath $canonicalPath -Content $Role.Content
     $content = @(
         "---"
         "name: $(Quote-Yaml $Role.Title)"

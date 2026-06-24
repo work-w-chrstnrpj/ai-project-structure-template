@@ -7,9 +7,7 @@ permission:
   bash: ask
 ---
 
-# Tool Adapter: Mentor Overlay
-
-Generated from `.agents/overlays/mentor.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/overlays/mentor.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Mentor Overlay
 

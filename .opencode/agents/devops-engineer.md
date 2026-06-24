@@ -7,9 +7,7 @@ permission:
   bash: ask
 ---
 
-# Tool Adapter: DevOps Engineer
-
-Generated from `.agents/roles/devops-engineer.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/devops-engineer.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: DevOps Engineer
 

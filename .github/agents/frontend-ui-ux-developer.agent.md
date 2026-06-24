@@ -8,9 +8,7 @@ tools:
   - search
 ---
 
-# Tool Adapter: Frontend UI/UX Developer
-
-Generated from `.agents/roles/frontend-ui-ux-developer.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/frontend-ui-ux-developer.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: Frontend UI/UX Developer
 

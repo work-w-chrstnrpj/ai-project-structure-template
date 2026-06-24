@@ -2,9 +2,7 @@ name = "security-engineer"
 description = "Reviews application, infrastructure, dependencies, credentials, workflows, integrations, and data handling for realistic security risk."
 
 developer_instructions = '''
-# Tool Adapter: Security Engineer
-
-Generated from `.agents/roles/security-engineer.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/security-engineer.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: Security Engineer
 

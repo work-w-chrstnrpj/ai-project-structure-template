@@ -79,13 +79,44 @@ foreach ($file in $roleFiles) {
     if ($content.Split("`n").Count -lt 30) {
         Write-Fail ("${relative}: fewer than 30 lines (possible compression)")
     }
+
+    if ($content -match "(?m)^## Allowed Skills") {
+        Write-Fail ("${relative}: still uses deprecated Allowed Skills section")
+    } elseif ($content -match "(?m)^## Reusable Skills") {
+        Write-Pass ("${relative}: has Reusable Skills section")
+    } else {
+        Write-Fail ("${relative}: missing Reusable Skills section")
+    }
+
+    if ($content -match "(?m)^## Embedded Capability Playbooks") {
+        Write-Pass ("${relative}: has Embedded Capability Playbooks section")
+    } else {
+        Write-Fail ("${relative}: missing Embedded Capability Playbooks section")
+    }
 }
 
 # --- 2. Validate skill frontmatter ---
 Write-Host "`n=== Skill Frontmatter ===" -ForegroundColor Cyan
 
+$expectedSkills = @(
+    "ask-repo-question", "investigate-issue", "plan-code-change", "execute-code-change",
+    "code-review", "use-context-tools", "write-automated-test-cases", "create-manual-test-cases",
+    "execute-manual-test-cases", "update-docs", "release-check", "generate-rca", "sync-ai-adapters"
+)
+
 $skillPath = Join-Relative @(".agents", "skills")
 $skillDirs = Get-ChildItem -Path $skillPath -Directory
+$actualSkills = $skillDirs | ForEach-Object { $_.Name } | Sort-Object
+$missingSkills = $expectedSkills | Where-Object { $_ -notin $actualSkills }
+$extraSkills = $actualSkills | Where-Object { $_ -notin $expectedSkills }
+
+if ($missingSkills.Count -gt 0) {
+    Write-Fail ("Missing curated skills: " + ($missingSkills -join ', '))
+} elseif ($extraSkills.Count -gt 0) {
+    Write-Fail ("Unexpected skill folders: " + ($extraSkills -join ', '))
+} else {
+    Write-Pass "Curated standalone skill set intact ($($expectedSkills.Count) skills)"
+}
 $granularSkills = @(
     "api-design", "api-testing", "auth-implementation", "database-change",
     "database-schema-design", "deployment", "frontend-implementation",
@@ -186,7 +217,7 @@ foreach ($dir in $generatedDirs) {
             if ($file.Name -eq "README.md") { continue }
             $content = Get-Content -Raw $file.FullName
             $relative = Get-RelativePath -BasePath $Root -TargetPath $file.FullName
-            if ($content -match "Generated from .+\.agents") {
+            if ($content -match '(Generated from|<!-- Generated from)[^\r\n]*\.agents') {
                 Write-Pass ("${relative}: has source notice")
             } else {
                 Write-Fail ("${relative}: missing source notice")
@@ -213,7 +244,29 @@ if (Test-Path $opencodeAgentDir) {
     }
 }
 
-# --- 7. Validate AGENTS.md structure ---
+# --- 7. Validate overlays ---
+Write-Host "`n=== Overlays ===" -ForegroundColor Cyan
+
+$overlayFiles = @("README.md", "mentor.md", "coach.md")
+foreach ($overlay in $overlayFiles) {
+    $overlayPath = Join-Relative @(".agents", "overlays", $overlay)
+    if (-not (Test-Path $overlayPath)) {
+        Write-Fail (".agents/overlays/${overlay}: missing")
+        continue
+    }
+
+    $content = Get-Content -Raw $overlayPath
+    $lineCount = $content.Split("`n").Count
+    if ($lineCount -lt 10) {
+        Write-Fail (".agents/overlays/${overlay}: only ${lineCount} lines (possible compression)")
+    } elseif ($content -match "(?m)^# ") {
+        Write-Pass (".agents/overlays/${overlay}: readable Markdown (${lineCount} lines)")
+    } else {
+        Write-Fail (".agents/overlays/${overlay}: missing heading structure")
+    }
+}
+
+# --- 8. Validate AGENTS.md structure ---
 Write-Host "`n=== AGENTS.md ===" -ForegroundColor Cyan
 
 $agentsMd = Join-Relative @("AGENTS.md")
@@ -235,7 +288,7 @@ if (Test-Path $agentsMd) {
     Write-Fail "AGENTS.md not found"
 }
 
-# --- 8. Validate script file formatting ---
+# --- 9. Validate script file formatting ---
 Write-Host "`n=== Script Files ===" -ForegroundColor Cyan
 
 $scriptsToCheck = @("sync-ai-adapters.ps1", "generate-ai-adapters.ps1", "validate-ai-template.ps1")

@@ -8,9 +8,7 @@ tools:
   - search
 ---
 
-# Tool Adapter: System Architect
-
-Generated from `.agents/roles/system-architect.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/system-architect.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: System Architect
 

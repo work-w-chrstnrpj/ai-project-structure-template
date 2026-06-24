@@ -10,9 +10,7 @@ tools:
   - Bash
 ---
 
-# Tool Adapter: Security Engineer
-
-Generated from `.agents/roles/security-engineer.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/security-engineer.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: Security Engineer
 

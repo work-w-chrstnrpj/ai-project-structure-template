@@ -7,9 +7,7 @@ permission:
   bash: ask
 ---
 
-# Tool Adapter: Backend & Database Engineer
-
-Generated from `.agents/roles/backend-database-engineer.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/backend-database-engineer.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: Backend & Database Engineer
 

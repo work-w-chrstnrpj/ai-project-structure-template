@@ -8,9 +8,7 @@ tools:
   - search
 ---
 
-# Tool Adapter: Product & Planning Manager
-
-Generated from `.agents/roles/product-planning-manager.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/product-planning-manager.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: Product & Planning Manager
 

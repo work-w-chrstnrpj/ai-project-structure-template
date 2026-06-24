@@ -7,9 +7,7 @@ permission:
   bash: ask
 ---
 
-# Tool Adapter: SQA Engineer
-
-Generated from `.agents/roles/sqa-engineer.md`. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`.
+<!-- Generated from .agents/roles/sqa-engineer.md. Do not edit directly. Edit the canonical source, then run `scripts/sync-ai-adapters.ps1`. -->
 
 # Agent: SQA Engineer
 
