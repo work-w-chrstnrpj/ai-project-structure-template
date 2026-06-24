@@ -121,15 +121,20 @@ Sync only the tools your team uses:
 
 ```powershell
 pwsh scripts/sync-ai-adapters.ps1 -Target codex
-pwsh scripts/sync-ai-adapters.ps1 -Target cursor
 pwsh scripts/sync-ai-adapters.ps1 -Target claude
-pwsh scripts/sync-ai-adapters.ps1 -Target opencode
+pwsh scripts/sync-ai-adapters.ps1 -Target cursor
 pwsh scripts/sync-ai-adapters.ps1 -Target copilot
+pwsh scripts/sync-ai-adapters.ps1 -Target opencode
 pwsh scripts/sync-ai-adapters.ps1 -Target windsurf
 pwsh scripts/sync-ai-adapters.ps1 -Target gemini
+pwsh scripts/sync-ai-adapters.ps1 -Target aider
+pwsh scripts/sync-ai-adapters.ps1 -Target cline
+pwsh scripts/sync-ai-adapters.ps1 -Target kilo
+pwsh scripts/sync-ai-adapters.ps1 -Target openhands
+pwsh scripts/sync-ai-adapters.ps1 -Target antigravity
 ```
 
-**Codex, Gemini, and Antigravity** read standalone skills from `.agents/skills/` directly — no per-tool skill copies are generated. You still run sync for Codex when role agents change so `.codex/agents/*.toml` stays current. Project instructions for Codex come from `AGENTS.md`, not a separate root file like `CLAUDE.md` or `GEMINI.md`.
+**Lighter adapters** (`aider`, `cline`, `kilo`, `openhands`, `antigravity`) generate project-instruction or config files only — not full agent/skill trees. **Codex, Gemini, and Antigravity** read standalone skills from `.agents/skills/` directly — no per-tool skill copies are generated. You still run sync for Codex when role agents change so `.codex/agents/*.toml` stays current. Project instructions for Codex come from `AGENTS.md`, not a separate root file like `CLAUDE.md` or `GEMINI.md`.
 
 Or sync everything:
 
@@ -154,6 +159,7 @@ Each tool reads project instructions differently. Common entry points:
 | Kilo Code | `kilo.jsonc`, `.kilo/rules/` |
 | Windsurf | `.windsurf/rules/`, `.windsurf/workflows/`, `.windsurf/skills/` |
 | Antigravity | `AGENTS.md`, `.agents/skills/` directly |
+| OpenHands | `AGENTS.md`, `.openhands/README.md` |
 
 ---
 
