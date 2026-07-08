@@ -21,8 +21,8 @@ Use this file to route work to the smallest useful role and skill.
 | --- | --- |
 | Plan a change | `plan-code-change` |
 | Implement a change | `execute-code-change` |
-| Implement a feature | `implement-feature` |
-| Fix a bug | `fix-bug` |
+| Implement a feature | `execute-code-change` |
+| Fix a bug | `investigate-issue`, then `execute-code-change` |
 | Investigate why an issue occurred | `investigate-issue` |
 | Generate an RCA report | `generate-rca` |
 | Review a patch | `code-review` |
@@ -30,12 +30,12 @@ Use this file to route work to the smallest useful role and skill.
 | Create manual test cases | `create-manual-test-cases` |
 | Execute manual test cases | `execute-manual-test-cases` |
 | Update docs | `update-docs` |
-| Review security | `security-review` |
+| Review security | Security Engineer role with `code-review` |
 | Prepare for release | `release-check` |
 
 ## Tool Adapter Routing
 
-Treat `.agents/roles/` and `.agents/skills/` as canonical. After changing either source, run `scripts/generate-ai-adapters.ps1` to refresh:
+Treat `.agents/roles/` and `.agents/skills/` as canonical. After changing either source, run `scripts/sync-ai-adapters.ps1 -Target all` to refresh generated adapters. `scripts/generate-ai-adapters.ps1` remains a compatibility wrapper.
 
 - Claude adapters in `.claude/`
 - Codex agents in `.codex/agents/`

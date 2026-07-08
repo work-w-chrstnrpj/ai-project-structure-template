@@ -1,64 +1,77 @@
-# Project Template
+# [Project Name]
 
-This folder is a reusable, project-agnostic structure for starting a new software project with clear documentation, AI-agent guidance, quality practices, and implementation placeholders.
+_AI-driven project structure template for multi-agent development._
 
-It is intentionally technology-agnostic. Replace bracketed placeholders such as `[Project Name]`, `[Domain]`, `[Runtime]`, `[Data Store]`, and `[External Integration]` with details from the target project.
+A reusable project template designed to work with Claude, Cursor, Copilot, Codex, OpenCode, Aider, Cline, Kilo, Windsurf, Gemini, and other AI coding tools. Provides canonical role prompts, reusable skill workflows, and adapter generation so agents can collaborate consistently across any tool.
 
-## How To Use This Template
+---
 
-1. Start with `wiki/tdd/tdd.md` and describe the technical design, constraints, and implementation intent.
-2. Fill `wiki/product-specification/product-specification.md` with the product goals, user needs, and acceptance criteria.
-3. Update `wiki/project-structure/project-structure.md` so the folder map matches the project you are building.
-4. Fill only the wiki pages that apply. Delete or archive sections that are not relevant to the project.
-5. Adapt `application/`, `service/`, `shared/`, and `tests/` to the actual architecture and programming language.
-6. Update `AGENTS.md`, `.agents/roles/`, `.agents/skills/`, `.agents/overlays/`, and `.agents/workflows/` with project-specific paths only after the project structure is known.
-7. Run `scripts/sync-ai-adapters.ps1` after role, skill, overlay, or workflow changes so tool-specific adapters stay in sync.
+## Quick Start
 
-## Fill First
+1. **Clone the repository**
 
-| File | Purpose |
-| --- | --- |
-| `wiki/tdd/tdd.md` | Technical design and implementation intent. |
-| `wiki/product-specification/product-specification.md` | Product goals, user workflows, and acceptance criteria. |
-| `wiki/project-structure/project-structure.md` | Source layout, ownership boundaries, and dependency rules. |
-| `AGENTS.md` | Agent operating rules for this project. |
+   ```bash
+   git clone <repo-url> <project-name>
+   cd <project-name>
+   ```
 
-## Optional Folders
+2. **Install prerequisites**
 
-| Folder | Use When |
-| --- | --- |
-| `.claude/` | The project uses Claude-compatible agent adapters. |
-| `.codex/` | The project uses Codex custom agent adapters. |
-| `.cursor/` | The project uses Cursor rules. |
-| `.opencode/` | The project uses OpenCode-compatible agent and skill adapters. |
-| `.github/` | The project uses repository automation, Copilot agents, Copilot skills, or issue and pull-request templates. |
-| `service/` | The project has a backend, worker, service, API, job, or integration layer. |
+   - [PowerShell 7+](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell) or Windows PowerShell 5.1.
+   - Your chosen runtime, language, and test framework (see `AGENTS.md` → Detected Tech Stack).
 
-## AI Tool Adapters
+3. **Update template placeholders**
 
-Canonical assets live in `.agents/` (roles, skills, overlays, workflows, tools). Tool-specific folders are generated adapters, not the source of truth. Skills are intentionally curated reusable workflows only.
+   Replace bracketed placeholders in `AGENTS.md`, `wiki/tdd/tdd.md`, product docs, and project-structure docs with project-specific values. Use the `update-docs` skill or edit manually.
 
-Preferred sync command:
+   ```bash
+   # Example: set the project goal
+   # Edit AGENTS.md: [State the project goal here.] -> "Build a todo app"
+   ```
 
-```powershell
-pwsh scripts/sync-ai-adapters.ps1 -Target all
-pwsh scripts/sync-ai-adapters.ps1 -Target opencode
-pwsh scripts/sync-ai-adapters.ps1 -Target claude
-```
+4. **Run adapter generation**
 
-`scripts/generate-ai-adapters.ps1` remains a compatibility wrapper that syncs all targets.
+   ```powershell
+   pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/sync-ai-adapters.ps1 -Target all
+   ```
 
-- Claude: `CLAUDE.md`, `.claude/agents/*.md`, `.claude/skills/<skill>/SKILL.md`
-- Codex: `.codex/agents/*.toml`; skills are read from `.agents/skills/`
-- Cursor: `.cursor/rules/*.mdc` and `.cursor/skills/<skill>/SKILL.md`
-- GitHub Copilot: `.github/copilot-instructions.md`, `.github/agents/*.agent.md`, `.github/skills/<skill>/SKILL.md`
-- OpenCode: `opencode.json`, `.opencode/agents/*.md`, `.opencode/skills/<skill>/SKILL.md`
-- Aider: `.aider.conf.yml`, `CONVENTIONS.md`
-- Cline: `.clinerules/*.md`
-- Kilo Code: `kilo.jsonc`, `.kilo/rules/*.md`
-- Windsurf: `.windsurf/rules/*.md`, `.windsurf/workflows/*.md`, `.windsurf/skills/<skill>/SKILL.md`
-- Google Antigravity: uses `AGENTS.md` and `.agents/skills/` directly
+   This creates or refreshes tool-specific agent and skill files in `.claude/`, `.cursor/`, `.github/`, `.opencode/`, and other adapter folders.
 
-## What This Template Does Not Include
+5. **Validate the template**
 
-This template does not include generated artifacts, build outputs, dependencies, runtime logs, local databases, binaries, screenshots, spreadsheets, or project-specific source code. Add those only when a real project requires them.
+   ```powershell
+   pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/validate-ai-template.ps1
+   ```
+
+   All checks should pass. If placeholders remain, the validation will still pass — only metadata and structure are checked.
+
+---
+
+## Repository Structure
+
+| Directory | Purpose |
+|---|---|
+| `application/` | User-facing application, client, or primary runtime |
+| `service/` | Backend service, API, worker, or integration layer |
+| `shared/` | Shared contracts, utilities, types, or design assets |
+| `tests/` | Cross-cutting manual and automated tests |
+| `wiki/` | Project intent, contracts, architecture, and operations docs |
+| `.agents/` | Canonical AI roles, skills, overlays, workflows, and tool policies |
+| `.ai/` | Context routing, maps, prompt recipes, and generated-index guidance |
+| `scripts/` | Automation scripts (adapter sync, validation, etc.) |
+
+Generated AI adapter folders (`.claude/`, `.cursor/`, `.github/`, `.opencode/`, etc.) are produced by `scripts/sync-ai-adapters.ps1` and should not be edited directly.
+
+---
+
+## Documentation
+
+- **`AGENTS.md`** — agent operating rules, repository map, tech stack, and verification commands.
+- **`wiki/`** — product specification, architecture, data model, API spec, testing, deployment, and development plan.
+- **`.ai/`** — context routing, agent maps, and prompt recipes for efficient AI interaction.
+
+---
+
+## License
+
+MIT — see `LICENSE`.

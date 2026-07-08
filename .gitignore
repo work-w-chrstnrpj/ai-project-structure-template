@@ -1,21 +1,50 @@
-# AI generated context and snapshots
+# Dependencies
+node_modules/
+vendor/
+third_party/
+
+# Build outputs
+dist/
+build/
+out/
+target/
+
+# Test and coverage
+coverage/
+.nyc_output/
+.cache/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE and editor directories
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Generated analysis outputs
 graphify-out/
 .graphify/
 .ai/generated/graphify/
-.ai/generated/**/tmp/
-.ai/generated/**/cache/
 .understand-anything/intermediate/
 .understand-anything/diff-overlay.json
 repomix-output.*
-
-# Assistant local state
-.aider.chat.history.md
-.aider.llm.history
-
-# Secrets and local environment
-.env
-.env.*
-*.pem
-*.key
-*.p12
-*.crt

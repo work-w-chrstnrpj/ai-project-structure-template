@@ -5,13 +5,13 @@ Use these prompts as starting points and adapt them to the current task.
 ## Implement A Feature
 
 ```text
-Use AGENTS.md and the implement-feature skill. Confirm the relevant product and technical wiki pages, identify exact files, implement the smallest safe change, add or update tests, run relevant verification, and summarize the result.
+Use AGENTS.md and the execute-code-change skill. Confirm the relevant product and technical wiki pages, identify exact files, implement the smallest safe change, add or update tests, run relevant verification, and summarize the result.
 ```
 
 ## Fix A Bug
 
 ```text
-Use AGENTS.md and the fix-bug skill. Capture expected and actual behavior, reproduce or inspect evidence, identify the smallest source-confirmed fix, add regression coverage, run relevant verification, and summarize root cause.
+Use AGENTS.md and the investigate-issue skill first. Capture expected and actual behavior, reproduce or inspect evidence, identify the smallest source-confirmed fix, then use execute-code-change to add the fix, regression coverage, and relevant verification.
 ```
 
 ## Add Automated Tests

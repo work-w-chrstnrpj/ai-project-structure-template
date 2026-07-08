@@ -51,7 +51,7 @@ function Write-Skip {
 Write-Host "`n=== Role Metadata ===" -ForegroundColor Cyan
 
 $rolePath = Join-Relative @(".agents", "roles")
-$roleFiles = Get-ChildItem -Path $rolePath -Filter "*.md"
+$roleFiles = Get-ChildItem -Path $rolePath -Filter "*.md" | Where-Object { $_.Name -ne "README.md" }
 if ($roleFiles.Count -eq 0) {
     Write-Fail "No role files found in .agents/roles/"
 } else {
@@ -172,7 +172,41 @@ if ($foundGranular.Count -gt 0) {
     Write-Pass "No granular skill folders detected"
 }
 
-# --- 4. Validate generated adapter frontmatter ---
+# --- 4. Validate skill references in routing maps ---
+Write-Host "`n=== Skill Reference Routing ===" -ForegroundColor Cyan
+
+$skillReferenceFiles = @(
+    (Join-Relative @(".ai", "maps", "agent-map.md"))
+    (Join-Relative @(".ai", "prompt-recipes.md"))
+)
+
+foreach ($referenceFile in $skillReferenceFiles) {
+    if (-not (Test-Path $referenceFile)) {
+        $relative = Get-RelativePath -BasePath $Root -TargetPath $referenceFile
+        Write-Fail ("${relative}: not found")
+        continue
+    }
+
+    $content = Get-Content -Raw $referenceFile
+    $relative = Get-RelativePath -BasePath $Root -TargetPath $referenceFile
+    $backtickSkills = [regex]::Matches($content, '`([^`]+)`') |
+        ForEach-Object { $_.Groups[1].Value } |
+        Where-Object { $_ -match '^[a-z][a-z0-9]+(-[a-z0-9]+)+$' }
+    $proseSkills = [regex]::Matches($content, '\b([a-z][a-z0-9]+(-[a-z0-9]+)+)\s+skill\b') |
+        ForEach-Object { $_.Groups[1].Value }
+    $referencedSkills = @($backtickSkills) + @($proseSkills)
+    $referencedSkills = $referencedSkills | Sort-Object -Unique
+
+    $unknownSkills = $referencedSkills | Where-Object { $_ -notin $expectedSkills }
+
+    if ($unknownSkills.Count -gt 0) {
+        Write-Fail ("${relative}: references unknown skills: " + ($unknownSkills -join ', '))
+    } else {
+        Write-Pass ("${relative}: skill references match curated skill set")
+    }
+}
+
+# --- 5. Validate generated adapter frontmatter ---
 Write-Host "`n=== Generated Adapter Frontmatter ===" -ForegroundColor Cyan
 
 $generatedDirs = @(".claude", ".cursor", ".github", ".opencode", ".windsurf")
@@ -195,7 +229,7 @@ foreach ($dir in $generatedDirs) {
     Write-Pass ("${dir}: no compressed frontmatter found")
 }
 
-# --- 5. Validate generated source notices ---
+# --- 6. Validate generated source notices ---
 Write-Host "`n=== Generated Source Notices ===" -ForegroundColor Cyan
 
 foreach ($dir in $generatedDirs) {
@@ -226,7 +260,7 @@ foreach ($dir in $generatedDirs) {
     }
 }
 
-# --- 6. Validate overlay permissions in OpenCode ---
+# --- 7. Validate overlay permissions in OpenCode ---
 Write-Host "`n=== OpenCode Overlay Permissions ===" -ForegroundColor Cyan
 
 $opencodeAgentDir = Join-Relative @(".opencode", "agents")
@@ -244,7 +278,7 @@ if (Test-Path $opencodeAgentDir) {
     }
 }
 
-# --- 7. Validate overlays ---
+# --- 8. Validate overlays ---
 Write-Host "`n=== Overlays ===" -ForegroundColor Cyan
 
 $overlayFiles = @("README.md", "mentor.md", "coach.md")
@@ -266,7 +300,7 @@ foreach ($overlay in $overlayFiles) {
     }
 }
 
-# --- 8. Validate AGENTS.md structure ---
+# --- 9. Validate AGENTS.md structure ---
 Write-Host "`n=== AGENTS.md ===" -ForegroundColor Cyan
 
 $agentsMd = Join-Relative @("AGENTS.md")
@@ -288,7 +322,7 @@ if (Test-Path $agentsMd) {
     Write-Fail "AGENTS.md not found"
 }
 
-# --- 9. Validate script file formatting ---
+# --- 10. Validate script file formatting ---
 Write-Host "`n=== Script Files ===" -ForegroundColor Cyan
 
 $scriptsToCheck = @("sync-ai-adapters.ps1", "generate-ai-adapters.ps1", "validate-ai-template.ps1")

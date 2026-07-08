@@ -395,17 +395,19 @@ function Sync-OpenCode {
         Write-OpenCodeAgent -Item $overlay -CanonicalPath ".agents/overlays/$($overlay.FileName)" -OutputName $overlay.Name -Mode "primary" -EditPermission "deny"
     }
 
-    $opencodeJson = @{
-        "`$schema" = "https://opencode.ai/config.json"
-        instructions = @(
-            "AGENTS.md",
-            ".agents/README.md",
-            ".agents/overlays/README.md",
-            ".agents/tools/context-policy.md",
-            ".agents/tools/verification-policy.md",
-            ".agents/tools/adapter-generation-policy.md"
-        )
-    } | ConvertTo-Json -Depth 4
+    $opencodeJson = @(
+        '{',
+        '  "$schema": "https://opencode.ai/config.json",',
+        '  "instructions": [',
+        '    "AGENTS.md",',
+        '    ".agents/README.md",',
+        '    ".agents/overlays/README.md",',
+        '    ".agents/tools/context-policy.md",',
+        '    ".agents/tools/verification-policy.md",',
+        '    ".agents/tools/adapter-generation-policy.md"',
+        '  ]',
+        '}'
+    ) -join "`n"
 
     Write-Utf8NoBom -Path (Join-RepoPath $Root "opencode.json") -Content $opencodeJson
     Sync-SkillAdapters -TargetRoots @((Join-RepoPath $Root ".opencode" "skills"))
@@ -492,9 +494,13 @@ function Sync-Kilo {
     ) -join "`n"
     Write-Utf8NoBom -Path (Join-RepoPath $Root ".kilo" "rules" "project.md") -Content $kiloRule
 
-    $kiloJson = @{
-        rules = @(".kilo/rules/project.md")
-    } | ConvertTo-Json -Depth 3
+    $kiloJson = @(
+        '{',
+        '  "rules": [',
+        '    ".kilo/rules/project.md"',
+        '  ]',
+        '}'
+    ) -join "`n"
     Write-Utf8NoBom -Path (Join-RepoPath $Root "kilo.jsonc") -Content $kiloJson
 }
 
@@ -576,7 +582,7 @@ $roleRoot = Join-RepoPath $Root ".agents" "roles"
 $skillRoot = Join-RepoPath $Root ".agents" "skills"
 $overlayRoot = Join-RepoPath $Root ".agents" "overlays"
 
-$roles = Get-ChildItem -Path $roleRoot -Filter "*.md" | Sort-Object Name | ForEach-Object { Get-RoleMetadata -File $_ }
+$roles = Get-ChildItem -Path $roleRoot -Filter "*.md" | Where-Object { $_.Name -ne "README.md" } | Sort-Object Name | ForEach-Object { Get-RoleMetadata -File $_ }
 $skills = Get-ChildItem -Path $skillRoot -Directory | Where-Object {
     Test-Path (Join-Path $_.FullName "SKILL.md")
 } | Sort-Object Name | ForEach-Object { Get-SkillMetadata -Directory $_ }

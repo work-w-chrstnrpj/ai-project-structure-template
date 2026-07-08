@@ -1,5 +1,5 @@
 {
-    "rules":  [
-                  ".kilo/rules/project.md"
-              ]
+  "rules": [
+    ".kilo/rules/project.md"
+  ]
 }
