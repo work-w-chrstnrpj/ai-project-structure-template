@@ -10,7 +10,7 @@ Design goals:
 
 - **One source of truth** for roles, reusable workflows, overlays, and process docs.
 - **Quality over quantity** — few agents, few standalone skills, rich role playbooks.
-- **Project-agnostic** — portable guidance in `.agents/`; project-specific paths in `AGENTS.md`, `wiki/`, and `.ai/`.
+- **Project-agnostic** — portable guidance in `.agents/`; project-specific paths in `AGENTS.md`, `docs/`, and `.ai/`.
 - **Tool-ready** — generated adapters for Claude, Cursor, Copilot, OpenCode, Windsurf, Aider, and others.
 
 Read `AGENTS.md` first for project-specific rules. Use this page for how the AI structure works and how to operate it.
@@ -98,9 +98,9 @@ Use **`pwsh`**, not **`powershell`**. The `powershell` command is Windows PowerS
 
 | File | Purpose |
 | --- | --- |
-| `wiki/tdd/tdd.md` | Technical design and implementation intent |
-| `wiki/product-specification/product-specification.md` | Product goals, workflows, acceptance criteria |
-| `wiki/project-structure/project-structure.md` | Source layout and ownership boundaries |
+| `docs/tdd/tdd.md` | Technical design and implementation intent |
+| `docs/product-specification/product-specification.md` | Product goals, workflows, acceptance criteria |
+| `docs/project-structure/project-structure.md` | Source layout and ownership boundaries |
 | `AGENTS.md` | Project goal, stack, repo map, verification commands |
 
 ### 2. Adapt code folders
@@ -280,7 +280,7 @@ Canonical location: `.agents/workflows/*.md`
 ## How to Run a Task (Decision Guide)
 
 ```text
-1. Read AGENTS.md and relevant wiki pages.
+1. Read AGENTS.md and relevant docs pages.
 2. Pick the owning role (smallest fit).
 3. Pick a standalone skill only if the task matches a reusable workflow.
 4. Add Mentor or Coach overlay if explanation style or critique is needed.
@@ -363,13 +363,13 @@ Context routing rules for a specific project belong in `.ai/context-routing.md` 
 ### Changing project-specific paths or commands
 
 1. Edit `AGENTS.md` (repo map, verification commands, project goal).
-2. Edit `wiki/` pages when product or architecture docs change.
+2. Edit `docs/` pages when product or architecture docs change.
 3. Do **not** put project-specific paths into portable `.agents/roles/` files.
 
-### Wiki update rules
+### Documentation update rules
 
-- Keep `wiki/tdd/tdd.md` as technical intent source.
-- Update API, testing, deployment, and structure wiki pages when behavior changes.
+- Keep `docs/tdd/tdd.md` as technical intent source.
+- Update API, testing, deployment, and structure docs when behavior changes.
 - Keep this guidelines page aligned when the canonical AI model changes.
 
 ---
@@ -383,9 +383,9 @@ Replace placeholders in `AGENTS.md` with real project commands:
 For changes to the AI template structure itself:
 
 ```powershell
-pwsh scripts/validate-ai-template.ps1
-pwsh scripts/sync-ai-adapters.ps1 -Target all
-pwsh scripts/validate-ai-template.ps1
+node bin/create-preset.mjs validate
+node bin/create-preset.mjs sync --target all
+npm test
 ```
 
 Never claim verification passed unless commands actually ran.
@@ -401,7 +401,7 @@ Never claim verification passed unless commands actually ran.
 | Giant `Allowed Skills` lists on roles | Use `Reusable Skills` + embedded playbooks |
 | Loading every role/skill file for every task | Pick smallest role; lazy-load skills |
 | Treating generated maps as implementation truth | Read exact source files before edits |
-| Skipping adapter sync after canonical changes | Run `sync-ai-adapters.ps1` |
+| Skipping adapter sync after canonical changes | Run `create-preset sync` |
 | Mentor/Coach owning implementation | Combine overlay + role for owned work |
 
 ---
@@ -415,4 +415,4 @@ Never claim verification passed unless commands actually ran.
 | `.agents/README.md` | Canonical AI asset overview |
 | `.agents/skills/README.md` | Curated skill list and criteria |
 | `scripts/README.md` | Sync and validation scripts |
-| `wiki/guidelines/ai-structure-guidelines.md` | This document |
+| `docs/guidelines/ai-structure-guidelines.md` | This document |

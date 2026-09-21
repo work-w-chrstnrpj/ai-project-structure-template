@@ -1,5 +1,7 @@
 # Test Specification
 
+> Status: NOT_STARTED
+
 This file is intended to describe the testing approach for `[Project Name]`.
 
 Use it to define test levels, commands, ownership, fixtures, manual test practices, and release verification expectations.

@@ -2,7 +2,7 @@
 
 This directory contains canonical reusable AI development assets that can move between projects.
 
-- `roles/`: the canonical 8 engineering subagents from the reusable agent model.
+- `roles/`: the canonical 9 engineering subagents from the reusable agent model.
 - `skills/`: small reusable executable workflows shared across roles and tools.
 - `overlays/`: response-style and feedback posture overlays such as Mentor and Coach.
 - `workflows/`: multi-role process docs.
@@ -10,11 +10,11 @@ This directory contains canonical reusable AI development assets that can move b
 
 Start with `AGENTS.md`, choose the smallest role that owns the task, then use a standalone skill only when the task needs a reusable workflow such as repo Q&A, issue investigation, planning, implementation, testing, review, documentation, release checking, RCA generation, context discovery, or adapter sync.
 
-Do not create standalone skills for every domain capability. Domain-specific procedures, checklists, and decision rules belong inside the owning role file under `Embedded Capability Playbooks`.
+Do not create standalone skills for every domain capability. Domain-specific procedures, checklists, and decision rules belong inside the owning role file under `Embedded Capability Playbooks` or reference playbooks.
 
-Portable roles, skills, overlays, workflows, and tool policies should not contain project-specific source paths. Project-specific paths belong in `AGENTS.md`, `wiki/`, `.ai/maps/`, and `.ai/index/`.
+Portable roles, skills, overlays, workflows, and tool policies should not contain project-specific source paths. Project-specific paths belong in `AGENTS.md`, `docs/`, `.ai/maps/`, and `.ai/index/`.
 
-Generated adapters are produced from canonical files by `scripts/sync-ai-adapters.ps1`. Do not edit generated adapters first; update canonical `.agents/` sources, then regenerate.
+Generated adapters are produced from canonical files by `node bin/create-preset.mjs sync` (or `scripts/sync-ai-adapters.ps1`). Do not edit generated adapters first; update canonical `.agents/` sources, then regenerate.
 
 Generated maps, graphs, repo maps, embeddings, and snapshots are navigation aids only. Read exact source files before edits and run relevant verification before claiming success.
 

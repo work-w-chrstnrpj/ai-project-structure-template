@@ -72,11 +72,11 @@ The `Identity` section contains parseable metadata fields required by the valida
 -   Keep the `Identity` section at the top with the three required metadata fields.
 -   Organize playbooks as `### Capability: <name>` subsections under `## Embedded Capability Playbooks`.
 -   Reference skills by backtick-quoted name (e.g. `` `code-review` ``).
--   Do not embed project-specific paths (those belong in `AGENTS.md`, `wiki/`, `.ai/`).
+-   Do not embed project-specific paths (those belong in `AGENTS.md`, `docs/`, `.ai/`).
 
 ## Relationship to Adapters
 
-Tool-specific adapters (`.claude/agents/`, `.cursor/rules/`, `.github/agents/`, `.opencode/agents/`, etc.) are **generated** from these canonical files by `scripts/sync-ai-adapters.ps1`. Edit the canonical role file first, then regenerate.
+Tool-specific adapters (`.claude/agents/`, `.cursor/rules/`, `.github/agents/`, `.opencode/agents/`, etc.) are **generated** from these canonical files by `node bin/create-preset.mjs sync` (or `scripts/sync-ai-adapters.ps1`). Edit the canonical role file first, then regenerate.
 
 ## Where to Start
 
@@ -86,6 +86,7 @@ Tool-specific adapters (`.claude/agents/`, `.cursor/rules/`, `.github/agents/`, 
 
 | File | Role |
 |---|---|
+| `software-engineer.md` | General coding, fullstack development, refactoring, and integration |
 | `system-architect.md` | Architecture and technical direction |
 | `product-planning-manager.md` | Requirements and planning |
 | `frontend-ui-ux-developer.md` | UI and client behavior |

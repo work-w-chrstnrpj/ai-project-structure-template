@@ -6,6 +6,7 @@ Use this file to route work to the smallest useful role and skill.
 
 | Task | Primary Role | Supporting Roles |
 | --- | --- | --- |
+| General coding, fullstack features, refactoring, utilities | Software Engineer | System Architect, SQA Engineer |
 | Architecture, module boundaries, and technical risk | System Architect | Security Engineer, implementation role |
 | Requirements, acceptance criteria, and planning | Product & Planning Manager | System Architect, SQA Engineer |
 | User interface or client behavior | Frontend UI/UX Developer | SQA Engineer, Security Engineer |
@@ -35,10 +36,10 @@ Use this file to route work to the smallest useful role and skill.
 
 ## Tool Adapter Routing
 
-Treat `.agents/roles/` and `.agents/skills/` as canonical. After changing either source, run `scripts/sync-ai-adapters.ps1 -Target all` to refresh generated adapters. `scripts/generate-ai-adapters.ps1` remains a compatibility wrapper.
+Treat `.agents/roles/` and `.agents/skills/` as canonical. After changing either source, run `node bin/create-preset.mjs sync --target all` (or `pwsh scripts/sync-ai-adapters.ps1 -Target all`) to refresh generated adapters.
 
+- Cursor rules and skills in `.cursor/`
+- Antigravity direct integration in `AGENTS.md` and `.agents/`
 - Claude adapters in `.claude/`
 - Codex agents in `.codex/agents/`
-- Cursor rules and skills in `.cursor/`
-- GitHub Copilot agents and skills in `.github/`
 - OpenCode agents and skills in `.opencode/`

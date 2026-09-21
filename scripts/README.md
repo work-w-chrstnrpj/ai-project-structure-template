@@ -4,20 +4,33 @@ This folder is intended for project automation scripts.
 
 Use scripts for repeatable development, verification, setup, maintenance, data processing, release, or operational tasks.
 
-## Available Scripts
+## Automation & Preset Engine
+
+The primary cross-platform CLI engine is written in native Node.js (in `bin/create-preset.mjs` and `lib/`), requiring zero third-party dependencies:
+
+- `node bin/create-preset.mjs <provider> [--profile <profile>] [--into <dir>]` — generate tailored provider presets.
+- `node bin/create-preset.mjs sync [--target <provider|all>]` — regenerate tool adapters.
+- `node bin/create-preset.mjs validate [--task <task>]` — validate structure, links, and context readiness.
+- `node bin/create-preset.mjs measure` — benchmark role context tokens and rule scoping.
+
+## PowerShell Scripts
+
+For environments with PowerShell 7+ or Windows PowerShell:
 
 | Script | Purpose |
 | --- | --- |
-| `sync-ai-adapters.ps1` | Preferred target-aware sync for Claude, Codex, Cursor, Copilot, OpenCode, Aider, Cline, Kilo, Windsurf, Antigravity, and OpenHands adapters from canonical `.agents/` sources. |
+| `sync-ai-adapters.ps1` | Target-aware sync for Claude, Codex, Cursor, Copilot, OpenCode, Aider, Cline, Kilo, Windsurf, Antigravity, and OpenHands adapters from canonical `.agents/` sources. |
 | `generate-ai-adapters.ps1` | Compatibility wrapper that runs `sync-ai-adapters.ps1 -Target all`. |
-| `validate-ai-template.ps1` | Validate canonical role metadata, skill frontmatter, generated adapter formatting, and absence of removed granular skills. Exits nonzero on failure. |
+| `validate-ai-template.ps1` | Validate canonical role metadata, skill frontmatter, generated adapter formatting, and absence of removed granular skills. |
 
 ## Validation
 
-Run validation after canonical changes or adapter regeneration:
+Run validation via Node or PowerShell:
 
-```powershell
-pwsh scripts/validate-ai-template.ps1
+```bash
+node bin/create-preset.mjs validate
+# or
+npm run validate
 ```
 
 The validation script checks:

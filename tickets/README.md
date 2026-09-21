@@ -22,4 +22,4 @@ This folder stores tickets: short-lived work items that track bugs, feature requ
 3.  **Resolved** -- change is implemented and verified.
 4.  **Closed** -- merged and deployed.
 
-For larger initiatives, consider tracking work in `wiki/development-plan/development-plan.md` instead.
+For larger initiatives, consider tracking work in `docs/development-plan/development-plan.md` instead.

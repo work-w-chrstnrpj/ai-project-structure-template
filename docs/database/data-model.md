@@ -1,5 +1,7 @@
 # Data Model
 
+> Status: NOT_STARTED
+
 This file is intended to document the project data model.
 
 Use it for databases, file storage, event stores, cache keys, search indexes, queues, or other persistent and semi-persistent state.

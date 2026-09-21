@@ -1,5 +1,7 @@
 # API Specification
 
+> Status: NOT_STARTED
+
 This file is intended to document APIs for `[Project Name]`.
 
 Use it only if the project exposes HTTP APIs, RPC methods, GraphQL operations, events, commands, webhooks, SDK functions, or another callable contract.

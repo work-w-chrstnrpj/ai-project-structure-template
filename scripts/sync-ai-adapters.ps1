@@ -157,7 +157,7 @@ function Remove-StaleSkillAdapters {
         [Parameter(Mandatory = $true)][string[]]$KeepNames
     )
 
-    if (-not (Test-Path $SkillRoot)) {
+    if (-not $Clean -or -not (Test-Path $SkillRoot)) {
         return
     }
 
@@ -269,7 +269,6 @@ function Write-CursorRule {
     $content = @(
         "---"
         "description: $(Quote-Yaml $Item.Description)"
-        "globs: '**/*'"
         "alwaysApply: false"
         "---"
         ""

@@ -1,5 +1,7 @@
 # Deployment Guide
 
+> Status: NOT_STARTED
+
 This file is intended to describe how `[Project Name]` is deployed and operated.
 
 Use it after the deployment target and runtime have been chosen.

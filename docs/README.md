@@ -1,16 +1,29 @@
-# Wiki Index
+# Documentation Index
 
-This folder is the project intent and operating record.
+This folder is the canonical project intent, architecture, contracts, and operating record.
 
-Fill wiki pages in this order:
+## Documentation Structure & Statuses
 
-1. `tdd/tdd.md`
-2. `product-specification/product-specification.md`
-3. `project-structure/project-structure.md`
-4. `api/api-specification.md`, if the project exposes APIs.
-5. `database/data-model.md`, if the project stores data.
-6. `testing/test-specification.md`
-7. `deployment/deployment.md`
+Each document tracks its state with a standardized status header:
+- `Status: NOT_STARTED` — placeholder only, not yet filled.
+- `Status: IN_PROGRESS` — partially drafted, actively being updated.
+- `Status: COMPLETE` — fully specified and aligned with implementation.
+- `Status: NOT_APPLICABLE` — explicitly not needed for this project (e.g., no database).
+
+### Core Required Documents
+Fill these first for every project:
+1. `tdd/tdd.md` — Technical design document, architecture constraints, runtime behavior.
+2. `product-specification/product-specification.md` — Product goals, workflows, acceptance criteria.
+3. `project-structure/project-structure.md` — Source directory layout and module ownership.
+
+### Conditional Documents
+Fill these when the project architecture requires them:
+4. `api/api-specification.md` — required if the project exposes or consumes APIs.
+5. `database/data-model.md` — required if the project persists data.
+6. `testing/test-specification.md` — testing strategy, test layers, and verification commands.
+7. `deployment/deployment.md` — deployment targets, CI/CD, environments, runtime config.
+
+### Reference Documents
 8. Diagrams, development plans, guidelines, and command references as needed.
 
-Keep wiki pages concise, current, and tied to source truth.
+Keep documentation concise, current, and tied to source truth. Context tools will warn on unfulfilled core documents and block tasks only when a requested workflow requires missing conditional docs.
